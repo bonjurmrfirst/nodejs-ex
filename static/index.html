@@ -6,6 +6,10 @@
   <title>Welcome to OpenShift</title>
 </head>
 <body>
-
+  <script src="socket.io.js"></script>
+  <script>
+    var socket = io();
+    socket.emit('chat message', 'msg!');
+  </script>
 </body>
 </html>
