@@ -6,10 +6,30 @@
   <title>Welcome to OpenShift</title>
 </head>
 <body>
+  <ul id="l">
+
+  </ul>
+
+  <input id="m">
+  <button id="b">send</button>
+  <script>
+    b.addEventListener('click', () => {
+      socket.emit('chat message', m.value);
+    });
+  </script>
+
   <script src="socket.io.js"></script>
   <script>
     var socket = io();
-    socket.emit('chat message', 'msg!');
+    socket.on('log', function(msg) {
+      console.log(msg)
+      let log = '';
+      msg.data.forEach(msg => {
+        log += `<li>${msg}</li>`;
+      });
+      console.log(log);
+      l.innerHTML = log;
+    });
   </script>
 </body>
 </html>

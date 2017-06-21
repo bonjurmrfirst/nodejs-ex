@@ -3,7 +3,9 @@ var fs = require('fs');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
 http.listen(8080);
+
 app.engine('html', require('ejs').renderFile);
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
@@ -24,8 +26,12 @@ app.use(function(err, req, res, next){
 io.on('connection', function(socket){
   console.log('a user connected');
 
+  var log = [];
+
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
+    log.push(msg);
+    io.emit('log', { data: log });
   });
 });
 
